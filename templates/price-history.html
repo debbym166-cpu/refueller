@@ -1,0 +1,32 @@
+{% extends "master.html" %}
+
+{% block title %}Price History{% endblock %}
+
+{% block content %}
+    <div class="page-head"><span class="eyebrow">Fuel price</span><h1>Price History</h1></div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="price-row">
+        <div>
+          <div class="eyebrow">Per litre today</div>
+          <div class="price-figure" style="font-size:28px;margin-top:4px">₦{{ price|floatformat:"-2g" }}<span style="font-size:14px;color:var(--ink-faint)">/L</span></div>
+        </div>
+        <span class="tag tag-flat" data-price-change-tag></span>
+      </div>
+      <div class="pill-tabs" data-price-tabs style="margin-top:14px">
+        <button type="button" class="pill-tab active" data-range="7D">7D</button><button type="button" class="pill-tab" data-range="30D">30D</button><button type="button" class="pill-tab" data-range="90D">90D</button><button type="button" class="pill-tab" data-range="1Y">1Y</button>
+      </div>
+      <svg data-price-chart-svg viewBox="0 0 350 170" style="width:100%;height:auto;margin-top:12px" role="img" aria-label="Fuel price over time"></svg>
+    </div>
+    {{ datasets|json_script:"price-history-data" }}
+
+    <div class="section-head"><h2>Recent changes</h2></div>
+    <div class="card-flush" style="padding:6px 16px">
+      {% for fp in recent_prices %}
+      <div class="price-row" style="padding:12px 0"><span style="font-size:13px;color:var(--ink-soft)">{{ fp.effective_from|date:"M j, Y · g:i A" }}</span><span class="mono" style="font-weight:500">₦{{ fp.price_per_litre|floatformat:"-2g" }}/L</span></div>
+      {% if not forloop.last %}<div class="divider"></div>{% endif %}
+      {% empty %}
+      <p style="text-align:center;padding:18px 0;color:var(--ink-faint);font-size:13px">No price changes recorded yet.</p>
+      {% endfor %}
+    </div>
+{% endblock %}

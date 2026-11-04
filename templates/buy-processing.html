@@ -1,0 +1,14 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}Payment Processing{% endblock %}
+
+{% block content %}
+    <div class="spinner-screen" data-auto-redirect="{{ success_url }}" data-redirect-delay="1800" style="min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 30px">
+      <div class="spinner" style="width:64px;height:64px;border-radius:50%;border:4px solid var(--green-100);border-top-color:var(--green-700);margin-bottom:22px"></div>
+      <h2 style="font-size:19px">Payment processing…</h2>
+      <p style="font-size:13px;color:var(--ink-soft);margin-top:8px">Confirming your payment of <span class="mono" data-pending-amount>₦{{ purchase.total_amount|floatformat:"-2g" }}</span>. This usually takes a few seconds.</p>
+    </div>
+    <noscript><p style="text-align:center;margin-top:20px"><a href="{{ success_url }}">Continue</a></p></noscript>
+{% endblock %}
+

@@ -1,0 +1,68 @@
+{% extends "master.html" %}
+
+{% block title %}My Litres{% endblock %}
+
+{% block content %}
+
+    <div class="page-head"><span class="eyebrow">Balance breakdown</span><h1>My Litres</h1>
+      <p class="page-sub">Your {{ balance|floatformat:3 }}L balance is made up of individual litre lots, each locked at the price you paid.</p>
+    </div>
+
+    <div class="stat-grid" style="margin-top:18px">
+      <div class="stat-card"><div class="stat-label">Total balance</div><div class="stat-value">{{ balance|floatformat:3 }}<span style="font-size:13px;color:var(--ink-faint);font-weight:400"> L</span></div></div>
+      <div class="stat-card"><div class="stat-label">Active lots</div><div class="stat-value">{{ active_lots|length }}</div></div>
+    </div>
+
+    <div class="section-head"><h2>Active lots</h2></div>
+    <div class="lot-grid">
+{% for lot in active_lots %}
+      <div class="lot-card">
+      <div class="lot-top">
+        <div>
+          <div class="lot-litres">{{ lot.litres_remaining|floatformat:3 }}<span style="font-size:13px;color:var(--ink-faint)"> L</span></div>
+          <div class="lot-meta">Bought at <span class="mono">₦{{ lot.price_per_litre|floatformat:"-2g" }}/L</span></div>
+        </div>
+        {% if lot.is_warning %}<span class="badge badge-warning"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path d="M12 4 3 20h18L12 4Z"/><path d="M12 10v4M12 17h.01"/></svg> {% if lot.days_left == 0 %}Expires today{% else %}Expires in {{ lot.days_left }} day{{ lot.days_left|pluralize }}{% endif %}</span>{% else %}<span class="badge badge-healthy"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg> {% if lot.days_left == 0 %}Expires today{% else %}Expires in {{ lot.days_left }} day{{ lot.days_left|pluralize }}{% endif %}</span>{% endif %}
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:12px;color:var(--ink-soft)">
+        <span>Purchased {{ lot.created_at|date:"M j" }}</span><span>Expires {{ lot.expires_at|date:"M j" }}</span>
+      </div>
+      <div class="lot-bar"><i style="width:{{ lot.percent_left }}%"></i></div>
+      <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11.5px;color:var(--ink-faint)">
+        <span>Remaining</span><span class="mono" style="color:var(--ink)">{{ lot.litres_remaining|floatformat:3 }}L of {{ lot.litres_purchased|floatformat:3 }}L</span>
+      </div>
+    </div>
+{% empty %}
+      <p style="padding:18px 0;color:var(--ink-faint);font-size:13px">You have no active litres. <a class="section-link" href="{% url 'portfolio:pump-up-buy-litres-page' %}">Buy litres</a></p>
+{% endfor %}
+    </div>
+
+    {% if expired_lots %}
+    <div class="section-head"><h2>Expired lots</h2></div>
+    <div class="lot-grid">
+{% for lot in expired_lots %}
+      <div class="lot-card">
+      <div class="lot-top">
+        <div>
+          <div class="lot-litres">0.000<span style="font-size:13px;color:var(--ink-faint)"> L</span></div>
+          <div class="lot-meta">Bought at <span class="mono">₦{{ lot.price_per_litre|floatformat:"-2g" }}/L</span></div>
+        </div>
+        <span class="badge badge-expired"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path d="M6 6l12 12M18 6 6 18"/></svg> Expired</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:12px;color:var(--ink-soft)">
+        <span>Purchased {{ lot.created_at|date:"M j" }}</span><span>Expires {{ lot.expires_at|date:"M j" }}</span>
+      </div>
+      <div class="lot-bar"><i style="width:0%"></i></div>
+      <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11.5px;color:var(--ink-faint)">
+        <span>Remaining</span><span class="mono" style="color:var(--ink)">0.000L of {{ lot.litres_purchased|floatformat:3 }}L</span>
+      </div>
+    </div>
+{% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="notice notice-green" style="margin-top:20px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+      <div>When you redeem fuel, LitreVault always draws from your earliest-expiring lot first, so nothing goes to waste.</div>
+    </div>
+    
+{% endblock %}

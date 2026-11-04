@@ -1,0 +1,27 @@
+{% extends "master.html" %}
+
+{% block title %}Log in{% endblock %}
+
+{% block content %}
+    <div class="page-head"><span class="eyebrow">Welcome back</span><h1>Log in</h1></div>
+
+    {% if error %}<div class="notice notice-red" style="margin-top:14px"><div>{{ error|linebreaksbr }}</div></div>{% endif %}
+
+    <form method="post" class="card" style="margin-top:14px;max-width:460px">
+      {% csrf_token %}
+      {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input class="input" type="email" id="email" name="email" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input class="input" type="password" id="password" name="password" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Log in</button>
+    </form>
+
+    <p style="margin-top:14px;font-size:13px;color:var(--ink-soft)">No account? <a class="section-link" href="{% url 'portfolio:signup' %}">Register</a></p>
+{% endblock %}

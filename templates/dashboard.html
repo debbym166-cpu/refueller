@@ -1,0 +1,65 @@
+{% extends "master.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+    <div class="page-head"><span class="eyebrow">{{ greeting }}</span><h1>{{ lv_name }}</h1></div>
+
+    <div class="wallet-card">
+      <div class="wallet-label">My LitreWallet</div>
+      <div class="wallet-figure">{{ balance|floatformat:3 }}<span class="unit">L</span></div>
+      <div class="wallet-sub">Available to redeem</div>
+      <div class="gauge">{% for bar in gauge %}<i class="{% if bar.on %}on{% endif %}" style="height:{{ bar.h }}px"></i>{% endfor %}</div>
+      <div class="wallet-protect"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg><div>Your litres are protected from future price increases until expiry.</div></div>
+      <div class="wallet-actions">
+        <a class="btn btn-primary" href="{% url 'portfolio:pump-up-buy-litres-page' %}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg> Buy Litres</a>
+        <a class="btn btn-secondary" href="{% url 'portfolio:pump-up-redeem-fuel-page' %}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="13.5" y="3.5" width="7" height="7" rx="1"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><path d="M14 14h2.5v2.5H14zM19 14h1.5M19 19h1.5M14 19h1"/></svg> Redeem Fuel</a>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>Current fuel price</h2><a class="section-link" href="{% url 'portfolio:pump-up-price-history-page' %}">Price history</a></div>
+    <div class="card">
+      <div class="price-row">
+        <div>
+          <div class="eyebrow">Per litre today</div>
+          <div class="price-figure" style="font-size:28px;margin-top:4px">₦{{ price|floatformat:"-2g" }}<span style="font-size:14px;color:var(--ink-faint)">/L</span></div>
+        </div>
+        {% if price_change is not None %}<span class="tag {% if price_change > 0 %}tag-up{% elif price_change < 0 %}tag-down{% else %}tag-flat{% endif %}">{% if price_change > 0 %}<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M7 17 17 7M9 7h8v8"/></svg> +{% elif price_change < 0 %}<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M7 7 17 17M17 9v8H9"/></svg> {% endif %}{{ price_change }}% this week</span>{% endif %}
+      </div>
+      <div class="divider"></div>
+      <div class="price-row">
+        <div class="eyebrow">Estimated current value of your wallet</div>
+      </div>
+      <div class="mono" style="font-size:22px;font-weight:500;margin-top:4px">₦{{ wallet_value|floatformat:"0g" }}</div>
+      <div class="input-help" style="margin-top:4px">Based on today's price of ₦{{ price|floatformat:"-2g" }}/L — not a cash balance. Your litres, not this figure, are what's guaranteed.</div>
+    </div>
+
+    {% if expiring_litres %}
+    <div class="section-head"><h2>Expiring soon</h2><a class="section-link" href="{% url 'portfolio:pump-up-litre-lots-page' %}">See all</a></div>
+    <div class="notice notice-amber" style="border-left:3px solid var(--amber-600);align-items:center;justify-content:space-between;gap:14px">
+      <div style="display:flex;gap:10px;align-items:flex-start"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" style="flex-shrink:0;margin-top:1px"><path d="M12 4 3 20h18L12 4Z"/><path d="M12 10v4M12 17h.01"/></svg>
+      <div><strong>{{ expiring_litres|floatformat:3 }}L</strong> expire before <strong>{{ expiring_until|date:"F j" }}</strong>. Redeem soon to avoid losing access.</div></div>
+      <a class="btn btn-sm" style="background:var(--amber-700);color:#fff;flex-shrink:0" href="{% url 'portfolio:pump-up-redeem-fuel-page' %}">Redeem</a>
+    </div>
+    {% endif %}
+
+    <div class="section-head"><h2>Recent purchases</h2><a class="section-link" href="{% url 'portfolio:pump-up-transaction-history-page' %}">See all</a></div>
+    <div class="card-flush" style="padding:6px 16px">
+      {% for p in recent_purchases %}
+      <div class="txn"><div class="txn-icon buy"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 3c3.6 4.2 6 7.6 6 10.5A6 6 0 1 1 6 13.5C6 10.6 8.4 7.2 12 3Z"/></svg></div><div class="txn-body"><div class="txn-title">Litres purchased</div><div class="txn-sub">{{ p.paid_at|date:"M j" }} · ₦{{ p.price_per_litre|floatformat:"-2g" }}/L</div></div><div class="txn-amt"><div class="txn-litres">+{{ p.litres_bought|floatformat:3 }}L</div><div class="txn-naira">₦{{ p.total_amount|floatformat:"-2g" }}</div></div></div>
+      {% empty %}
+      <p style="text-align:center;padding:18px 0;color:var(--ink-faint);font-size:13px">No purchases yet. <a class="section-link" href="{% url 'portfolio:pump-up-buy-litres-page' %}">Buy your first litres</a></p>
+      {% endfor %}
+    </div>
+
+    <div class="section-head"><h2>Recent redemptions</h2><a class="section-link" href="{% url 'portfolio:pump-up-transaction-history-page' %}">See all</a></div>
+    <div class="card-flush" style="padding:6px 16px">
+      {% for r in recent_redemptions %}
+      <div class="txn"><div class="txn-icon redeem"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"/><path d="M4 11h10M2 21h14"/><path d="M14 8.5 17 11v6.5a1.5 1.5 0 0 0 3 0V10a2 2 0 0 0-.6-1.4L17.5 7"/></svg></div><div class="txn-body"><div class="txn-title">{{ r.station.name }}</div><div class="txn-sub">{{ r.redeemed_at|date:"M j · g:i A" }}</div></div><div class="txn-amt"><div class="txn-litres">−{{ r.litres_redeemed|floatformat:3 }}L</div></div></div>
+      {% empty %}
+      <p style="text-align:center;padding:18px 0;color:var(--ink-faint);font-size:13px">No redemptions yet.</p>
+      {% endfor %}
+    </div>
+
+{% endblock %}

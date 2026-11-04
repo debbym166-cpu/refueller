@@ -1,0 +1,28 @@
+{% extends "master.html" %}
+
+{% block title %}Transactions{% endblock %}
+
+{% block content %}
+
+    <div class="page-head"><span class="eyebrow">All activity</span><h1>Transactions</h1></div>
+    <div class="pill-tabs" data-txn-tabs style="margin-top:10px">
+      <button type="button" class="pill-tab active" data-filter="all">All</button><button type="button" class="pill-tab" data-filter="buy">Purchases</button><button type="button" class="pill-tab" data-filter="redeem">Redemptions</button><button type="button" class="pill-tab" data-filter="expired">Expired</button>
+    </div>
+    <div class="card-flush" data-txn-list style="margin-top:16px;padding:6px 16px">
+      {% for row in rows %}{% if row.type == "buy" %}<div class="txn" data-txn-type="buy">
+      <div class="txn-icon buy"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 3c3.6 4.2 6 7.6 6 10.5A6 6 0 1 1 6 13.5C6 10.6 8.4 7.2 12 3Z"/></svg></div>
+      <div class="txn-body"><div class="txn-title">Litres purchased</div><div class="txn-sub">{{ row.when|date:"M j, Y · g:i A" }}</div></div>
+      <div class="txn-amt"><div class="txn-litres" style="">+{{ row.litres|floatformat:3 }}L</div><div class="txn-naira">₦{{ row.naira|floatformat:"-2g" }}</div></div>
+    </div>{% elif row.type == "redeem" %}<div class="txn" data-txn-type="redeem">
+      <div class="txn-icon redeem"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"/><path d="M4 11h10M2 21h14"/><path d="M14 8.5 17 11v6.5a1.5 1.5 0 0 0 3 0V10a2 2 0 0 0-.6-1.4L17.5 7"/></svg></div>
+      <div class="txn-body"><div class="txn-title">{{ row.title }}</div><div class="txn-sub">{{ row.when|date:"M j, Y · g:i A" }}</div></div>
+      <div class="txn-amt"><div class="txn-litres" style="">−{{ row.litres|floatformat:3 }}L</div></div>
+    </div>{% else %}<div class="txn" data-txn-type="expired">
+      <div class="txn-icon expired"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M6 6l12 12M18 6 6 18"/></svg></div>
+      <div class="txn-body"><div class="txn-title">Unused litres expired</div><div class="txn-sub">{{ row.when|date:"M j, Y" }}</div></div>
+      <div class="txn-amt"><div class="txn-litres" style="color:var(--ink-faint)">{{ row.litres|floatformat:3 }}L</div><div style="margin-top:3px"><span class="badge badge-expired">Expired</span></div></div>
+    </div>{% endif %}{% endfor %}
+    <p data-txn-empty {% if rows %}hidden{% endif %} style="text-align:center;padding:30px 0;color:var(--ink-faint);font-size:13px">No transactions in this category yet.</p>
+    </div>
+    
+{% endblock %}

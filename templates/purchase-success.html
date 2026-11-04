@@ -1,0 +1,29 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}Purchase Success{% endblock %}
+
+{% block content %}
+    <div class="success-screen" data-purchase-success style="padding-top:56px;text-align:center">
+      <div style="width:66px;height:66px;border-radius:50%;background:var(--green-100);color:var(--green-700);display:flex;align-items:center;justify-content:center;margin:0 auto"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="34" height="34"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.3 2.3L16 9.7"/></svg></div>
+      <h1 style="font-size:20px;margin-top:18px">Purchase successful</h1>
+      <p style="font-size:13px;color:var(--ink-soft);margin-top:4px"><span data-result-litres>{{ purchase.litres_bought|floatformat:"-3" }}</span>L successfully added to your wallet</p>
+
+      <div class="wallet-figure" style="justify-content:center;color:var(--ink);margin-top:22px"><span data-result-litres-3dp>{{ purchase.litres_bought|floatformat:3 }}</span><span class="unit" style="color:var(--ink-faint)">L</span></div>
+      <div class="gauge dark"><i class="on" style="height:6px"></i><i class="on" style="height:8px"></i><i class="on" style="height:10px"></i><i class="on" style="height:12px"></i><i class="on" style="height:14px"></i><i class="on" style="height:16px"></i><i class="on" style="height:14px"></i><i class="on" style="height:12px"></i><i class="on" style="height:16px"></i><i class="on" style="height:10px"></i><i class="on" style="height:8px"></i><i class="on" style="height:14px"></i><i class="on" style="height:9px"></i><i class="on" style="height:12px"></i></div>
+
+      <div class="card" style="margin-top:24px;text-align:left">
+        <div class="price-row"><span style="font-size:13px;color:var(--ink-soft)">Locked price</span><span class="mono" style="font-weight:500">₦<span data-result-price>{{ purchase.price_per_litre|floatformat:"-2g" }}</span>/L</span></div>
+        <div class="divider"></div>
+        <div class="price-row"><span style="font-size:13px;color:var(--ink-soft)">Amount paid</span><span class="mono" style="font-weight:500">₦<span data-result-amount>{{ purchase.total_amount|floatformat:"-2g" }}</span></span></div>
+        <div class="divider"></div>
+        <div class="price-row"><span style="font-size:13px;color:var(--ink-soft)">Expires</span><span style="font-weight:500;font-size:13px" data-result-expiry>{{ expires_at|date:"F j, Y" }}</span></div>
+        <div class="divider"></div>
+        <div class="price-row"><span style="font-size:13px;color:var(--ink-soft)">Payment reference</span><span class="mono" style="font-weight:500;font-size:12.5px" data-result-reference>{{ purchase.payment_reference }}</span></div>
+      </div>
+
+      <a class="btn btn-primary" href="{% url 'portfolio:pump-up-litre-lots-page' %}" style="margin-top:26px">View My Litres</a>
+      <a class="btn btn-secondary" href="{% url 'portfolio:home' %}" style="margin-top:10px">Back to Dashboard</a>
+    </div>
+{% endblock %}
+

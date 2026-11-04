@@ -1,0 +1,25 @@
+{% extends "master.html" %}
+
+{% block title %}Stations{% endblock %}
+
+{% block content %}
+    <div class="page-head"><span class="eyebrow">Partner network</span><h1>Stations</h1></div>
+    <div class="card-flush" style="padding:6px 16px;margin-top:14px">
+      {% for station in stations %}
+      <div class="price-row" style="padding:12px 0"><div><div style="font-weight:600">{{ station.name }}</div><div class="input-help">{{ station.address }} · {{ station.code }}</div></div><span class="tag {% if station.is_active %}tag-down{% else %}tag-flat{% endif %}">{% if station.is_active %}Active{% else %}Inactive{% endif %}</span></div>
+      {% if not forloop.last %}<div class="divider"></div>{% endif %}
+      {% empty %}
+      <p style="text-align:center;padding:18px 0;color:var(--ink-faint);font-size:13px">No stations yet.</p>
+      {% endfor %}
+    </div>
+    {% if request.user.is_staff %}
+    <form method="post" action="{% url 'portfolio:station' %}" class="card" style="margin-top:14px">
+      {% csrf_token %}
+      <div class="eyebrow" style="margin-bottom:10px">Add station</div>
+      <div class="field"><input class="input" type="text" placeholder="Station name" name="station-name" required></div>
+      <div class="field"><input class="input" type="text" placeholder="Address" name="station-address" required></div>
+      <div class="field"><input class="input" type="text" placeholder="Station code" name="station-code" required></div>
+      <button type="submit" class="btn btn-primary">Create Station</button>
+    </form>
+    {% endif %}
+{% endblock %}

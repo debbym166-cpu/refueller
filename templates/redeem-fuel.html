@@ -1,0 +1,53 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}Redeem Fuel{% endblock %}
+
+{% block content %}
+    <div class="back-row">
+      <a class="icon-btn" href="{% url 'portfolio:home' %}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M15 5 8 12l7 7"/></svg></a>
+      <div style="font-family:'Space Grotesk';font-weight:600;font-size:16px">Redeem Fuel</div>
+    </div>
+    <div style="padding-top:6px">
+
+    <form method="post" action="{% url 'portfolio:pump-up-redeem-fuel-page' %}" novalidate data-redeem-form data-available-litres="{{ available_raw }}">
+      {% csrf_token %}
+
+      <div class="section-head" style="margin-top:0"><h2>Select a station</h2></div>
+      <div class="station-group" role="radiogroup" aria-label="Partner station" style="display:flex;flex-direction:column;gap:10px">
+        {% for station in stations %}
+        <label class="station-card{% if forloop.first %} selected{% endif %}" data-station-card>
+          <input type="radio" name="station" value="{{ station.code }}" {% if forloop.first %}checked{% endif %} style="position:absolute;opacity:0;width:0;height:0">
+          <div class="station-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><path d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"/><path d="M4 11h10M2 21h14"/><path d="M14 8.5 17 11v6.5a1.5 1.5 0 0 0 3 0V10a2 2 0 0 0-.6-1.4L17.5 7"/></svg></div>
+          <div style="flex:1"><div class="station-name">{{ station.name }}</div><div class="station-addr">{{ station.address }}</div></div>
+          <div class="station-check" style="color:var(--green-700){% if not forloop.first %};visibility:hidden{% endif %}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.3 2.3L16 9.7"/></svg></div>
+        </label>
+        {% empty %}
+        <p style="padding:14px 0;color:var(--ink-faint);font-size:13px">No partner stations are available right now.</p>
+        {% endfor %}
+      </div>
+
+      <div class="section-head"><h2>How many litres?</h2></div>
+      <div class="card" style="text-align:center">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-soft);margin-bottom:2px">
+          <span>Available</span><span class="mono" style="color:var(--ink);font-weight:500">{{ available|floatformat:3 }}L</span>
+        </div>
+        <div style="position:relative;margin-top:8px">
+          <input class="input mono input-litres" style="border:none;background:transparent;font-size:44px" type="number" id="redeem-litres" name="litres" min="0.5" max="{{ available_raw }}" step="0.5" value="{{ default_litres|floatformat:"-3" }}" inputmode="decimal" data-redeem-litres-input required>
+          <span aria-hidden="true" style="position:absolute;right:26%;top:50%;transform:translateY(-50%);font-size:18px;color:var(--ink-faint)">L</span>
+        </div>
+        <div class="input-help" data-redeem-error style="color:var(--red-700);display:none">You can't redeem more than your available balance.</div>
+      </div>
+
+      <div class="section-head"><h2>Lots this will draw from</h2></div>
+      <div class="card-flush" style="padding:14px 16px" data-lot-breakdown>
+        <!-- populated by app.js -->
+        {{ lots_data|json_script:"user-lots-data" }}
+      </div>
+      <div class="input-help" style="margin-top:10px">LitreVault always redeems from your earliest-expiring litres first — you never need to choose manually.</div>
+
+      <button type="submit" class="btn btn-primary" style="margin-top:22px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="13.5" y="3.5" width="7" height="7" rx="1"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><path d="M14 14h2.5v2.5H14zM19 14h1.5M19 19h1.5M14 19h1"/></svg> Generate Redemption QR</button>
+    </form>
+    </div>
+{% endblock %}
+

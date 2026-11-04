@@ -1,0 +1,37 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}Redemption QR{% endblock %}
+
+{% block content %}
+    <div class="back-row">
+      <a class="icon-btn" href="{% url 'portfolio:home' %}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M15 5 8 12l7 7"/></svg></a>
+      <div style="font-family:'Space Grotesk';font-weight:600;font-size:16px">Redemption QR</div>
+    </div>
+    <div style="padding-top:6px" id="qr-root" data-qr-screen data-countdown-seconds="{{ seconds_remaining }}" data-seconds-remaining="{{ seconds_remaining }}" data-expired-redirect="{{ expired_url }}" data-status-url="{{ status_url }}" data-success-url="{{ success_url }}">
+
+      <div class="card" style="margin-top:18px;text-align:center">
+        <div class="eyebrow">Show this to the attendant</div>
+        {% if qr_svg %}<div style="width:220px;max-width:100%;margin:16px auto 6px;background:#fff;border-radius:12px;padding:6px">{{ qr_svg|safe }}</div>{% endif %}
+        <div class="mono" style="font-size:34px;font-weight:500;letter-spacing:0.2em;margin-top:10px">{{ redemption.verification_code }}</div>
+        <div class="input-help">{% if qr_svg %}Or give the attendant this 6-digit code{% else %}Give the attendant this 6-digit code{% endif %}</div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <div class="price-row"><span style="font-size:13px;color:var(--ink-soft)">Litres</span><span class="mono" style="font-weight:500" data-redemption-litres>{{ redemption.litres_redeemed|floatformat:3 }}<span> L</span></span></div>
+        <div class="divider"></div>
+        <div class="price-row"><span style="font-size:13px;color:var(--ink-soft)">Station</span><span style="font-weight:500;font-size:13px" data-redemption-station>{{ redemption.station.name }}</span></div>
+        <div class="divider"></div>
+        <div class="price-row"><span style="font-size:13px;color:var(--ink-soft)">Expires in</span><span class="mono" style="font-weight:500" data-countdown-display>{{ countdown_text }}</span></div>
+      </div>
+
+      <div class="notice notice-green" style="margin-top:14px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg><div>Litres are only deducted after the attendant confirms. If this code expires, nothing is lost.</div></div>
+
+      <form method="post" action="{% url 'portfolio:pump-up-redemption-cancel' redemption.qr_code %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-secondary" style="margin-top:20px">Cancel redemption</button>
+      </form>
+    </div>
+{% endblock %}
+
+{% block js %}{{ block.super }}<script src="{% static 'js_models/js/qr.js' %}" defer></script>{% endblock %}

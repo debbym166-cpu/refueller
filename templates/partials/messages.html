@@ -1,0 +1,3 @@
+{% if messages %}{% for message in messages %}
+<div class="notice {% if message.tags == 'error' %}notice-red{% else %}notice-green{% endif %}" style="margin-top:14px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><div>{{ message }}</div></div>
+{% endfor %}{% endif %}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LitreVault — Price Management</title>
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body class="">
+<div class="app">
+<aside class="sidebar">
+      <div class="brand"><div class="brand-mark"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:#fff" width="16" height="16"><path d="M12 3c3.6 4.2 6 7.6 6 10.5A6 6 0 1 1 6 13.5C6 10.6 8.4 7.2 12 3Z"/></svg></div><span class="brand-name">LitreVault Admin</span></div>
+      <nav class="side-nav"><a class="side-link" href="18-admin-dashboard.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1.5"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1.5"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1.5"/><rect x="13" y="13" width="7.5" height="7.5" rx="1.5"/></svg><span>Overview</span></a><a class="side-link active" href="19-admin-price-management.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg><span>Price Management</span></a><a class="side-link" href="20-admin-stations.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"/><path d="M4 11h10M2 21h14"/><path d="M14 8.5 17 11v6.5a1.5 1.5 0 0 0 3 0V10a2 2 0 0 0-.6-1.4L17.5 7"/></svg><span>Stations</span></a><a class="side-link" href="21-admin-litre-validity.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 3c3.6 4.2 6 7.6 6 10.5A6 6 0 1 1 6 13.5C6 10.6 8.4 7.2 12 3Z"/></svg><span>Litre Validity</span></a><a class="side-link" href="#" aria-disabled="true" title="Coming soon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="9" cy="8" r="3"/><path d="M2.5 19c1-3 3.3-5 6.5-5s5.5 2 6.5 5"/><circle cx="17" cy="8.5" r="2.3"/><path d="M16 13.2c1.9.5 3.3 2 4 4.8"/></svg><span>Users</span></a></nav>
+      <div class="side-foot">
+        <div class="side-user"><div class="side-avatar">AD</div><div><div style="font-weight:600">Admin Console</div><div class="mono" style="color:var(--ink-faint);font-size:11px">Administrator</div></div></div>
+      </div>
+    </aside>
+<div>
+<div class="topbar">
+      <div class="brand"><div class="brand-mark"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:#fff" width="16" height="16"><path d="M12 3c3.6 4.2 6 7.6 6 10.5A6 6 0 1 1 6 13.5C6 10.6 8.4 7.2 12 3Z"/></svg></div><span class="brand-name">LitreVault</span></div>
+      <button type="button" class="icon-btn" aria-label="Notifications"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></button>
+    </div>
+<div class="content">
+
+    <div class="desktop-main">
+    <div class="page-head"><span class="eyebrow">Pricing</span><h1>Price Management</h1></div>
+
+    <div class="grid-2" style="margin-top:18px">
+      <div>
+        <div class="card">
+          <div class="eyebrow">Current price</div>
+          <div class="mono" style="font-size:38px;font-weight:500;margin-top:6px">₦1,200<span style="font-size:16px;color:var(--ink-faint)">/L</span></div>
+          <div class="input-help">Effective since Aug 14, 2026 · 9:00 AM</div>
+        </div>
+
+        <form method="post" action="/admin/prices/create/" novalidate data-price-form class="card" style="margin-top:14px">
+          <input type="hidden" name="csrfmiddlewaretoken" value="">
+          <div class="eyebrow" style="margin-bottom:10px">Set new price</div>
+          <div class="field"><label for="new-price">New price per litre (₦)</label><input class="input mono" type="number" id="new-price" name="new_price" min="1" step="0.01" placeholder="1050" required></div>
+          <div class="field"><label for="effective-at">Effective date &amp; time</label><input class="input" type="datetime-local" id="effective-at" name="effective_at" required></div>
+          <div class="notice notice-amber"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 4 3 20h18L12 4Z"/><path d="M12 10v4M12 17h.01"/></svg><div>This only affects new purchases from the effective time onward. Existing litre lots keep their locked price.</div></div>
+          <button type="submit" class="btn btn-primary" style="margin-top:14px">Set New Price</button>
+        </form>
+      </div>
+
+      <div>
+        <div class="section-head" style="margin-top:0"><h2>Price history</h2></div>
+        <div class="card-flush" style="overflow-x:auto">
+          <table class="table">
+            <thead><tr><th scope="col">Date</th><th scope="col">Price</th><th scope="col">Changed by</th></tr></thead>
+            <tbody>
+            <tr><td>Aug 14, 2026</td><td class="mono">₦1,200/L</td><td>Admin — F. Balogun</td></tr>
+            <tr><td>Aug 13, 2026</td><td class="mono">₦1,050/L</td><td>Admin — F. Balogun</td></tr>
+            <tr><td>Aug 1, 2026</td><td class="mono">₦980/L</td><td>Admin — C. Nwosu</td></tr>
+            <tr><td>Jul 16, 2026</td><td class="mono">₦950/L</td><td>Admin — C. Nwosu</td></tr>
+            <tr><td>Jun 30, 2026</td><td class="mono">₦910/L</td><td>System — scheduled</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="input-help" style="margin-top:10px">Historical prices cannot be edited. They're a permanent, auditable record.</div>
+      </div>
+    </div>
+    </div>
+    
+</div>
+</div>
+</div>
+
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>

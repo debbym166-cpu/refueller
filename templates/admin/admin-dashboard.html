@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LitreVault — Admin Dashboard</title>
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body class="">
+<div class="app">
+<aside class="sidebar">
+      <div class="brand"><div class="brand-mark"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:#fff" width="16" height="16"><path d="M12 3c3.6 4.2 6 7.6 6 10.5A6 6 0 1 1 6 13.5C6 10.6 8.4 7.2 12 3Z"/></svg></div><span class="brand-name">LitreVault Admin</span></div>
+      <nav class="side-nav"><a class="side-link active" href="18-admin-dashboard.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1.5"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1.5"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1.5"/><rect x="13" y="13" width="7.5" height="7.5" rx="1.5"/></svg><span>Overview</span></a><a class="side-link" href="19-admin-price-management.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg><span>Price Management</span></a><a class="side-link" href="20-admin-stations.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"/><path d="M4 11h10M2 21h14"/><path d="M14 8.5 17 11v6.5a1.5 1.5 0 0 0 3 0V10a2 2 0 0 0-.6-1.4L17.5 7"/></svg><span>Stations</span></a><a class="side-link" href="21-admin-litre-validity.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 3c3.6 4.2 6 7.6 6 10.5A6 6 0 1 1 6 13.5C6 10.6 8.4 7.2 12 3Z"/></svg><span>Litre Validity</span></a><a class="side-link" href="#" aria-disabled="true" title="Coming soon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="9" cy="8" r="3"/><path d="M2.5 19c1-3 3.3-5 6.5-5s5.5 2 6.5 5"/><circle cx="17" cy="8.5" r="2.3"/><path d="M16 13.2c1.9.5 3.3 2 4 4.8"/></svg><span>Users</span></a></nav>
+      <div class="side-foot">
+        <div class="side-user"><div class="side-avatar">AD</div><div><div style="font-weight:600">Admin Console</div><div class="mono" style="color:var(--ink-faint);font-size:11px">Administrator</div></div></div>
+      </div>
+    </aside>
+<div>
+<div class="topbar">
+      <div class="brand"><div class="brand-mark"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:#fff" width="16" height="16"><path d="M12 3c3.6 4.2 6 7.6 6 10.5A6 6 0 1 1 6 13.5C6 10.6 8.4 7.2 12 3Z"/></svg></div><span class="brand-name">LitreVault</span></div>
+      <button type="button" class="icon-btn" aria-label="Notifications"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></button>
+    </div>
+<div class="content">
+
+    <div class="desktop-main">
+    <div class="page-head"><span class="eyebrow">Overview</span><h1>Admin Dashboard</h1></div>
+
+    <div class="stat-grid-4" style="margin-top:16px">
+      <div class="stat-card"><div class="stat-label">Current fuel price</div><div class="stat-value">₦1,200/L</div><div class="stat-sub">+14.3% vs yesterday</div></div>
+      <div class="stat-card"><div class="stat-label">Active users</div><div class="stat-value">18,204</div><div class="stat-sub">+312 this week</div></div>
+      <div class="stat-card"><div class="stat-label">Litres sold</div><div class="stat-value">2.41M L</div><div class="stat-sub">All-time</div></div>
+      <div class="stat-card"><div class="stat-label">Litres redeemed</div><div class="stat-value">1.96M L</div><div class="stat-sub">81% of sold</div></div>
+    </div>
+    <div class="stat-grid-4" style="margin-top:12px">
+      <div class="stat-card"><div class="stat-label">Expiring soon</div><div class="stat-value" style="color:var(--amber-700)">44,120 L</div><div class="stat-sub">Within 14 days</div></div>
+      <div class="stat-card"><div class="stat-label">Active stations</div><div class="stat-value">86</div><div class="stat-sub">Across 12 states</div></div>
+      <div class="stat-card"><div class="stat-label">Redemptions today</div><div class="stat-value">1,204</div><div class="stat-sub">128,500L total</div></div>
+      <div class="stat-card"><div class="stat-label">Purchases today</div><div class="stat-value">843</div><div class="stat-sub">₦171.2M total</div></div>
+    </div>
+
+    <div class="grid-2" style="margin-top:26px">
+      <div>
+        <div class="section-head" style="margin-top:0"><h2>Recent purchases</h2></div>
+        <div class="card-flush" style="padding:6px 16px">
+          <div class="txn"><div class="txn-icon buy"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 3c3.6 4.2 6 7.6 6 10.5A6 6 0 1 1 6 13.5C6 10.6 8.4 7.2 12 3Z"/></svg></div><div class="txn-body"><div class="txn-title">Ngozi Eze</div><div class="txn-sub">Aug 14, 2026 · 2:41 PM</div></div><div class="txn-amt"><div class="txn-litres">+50.000L</div><div class="txn-naira">₦60,000</div></div></div>
+          <div class="txn"><div class="txn-icon buy"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 3c3.6 4.2 6 7.6 6 10.5A6 6 0 1 1 6 13.5C6 10.6 8.4 7.2 12 3Z"/></svg></div><div class="txn-body"><div class="txn-title">Tunde Adeyemi</div><div class="txn-sub">Aug 14, 2026 · 1:52 PM</div></div><div class="txn-amt"><div class="txn-litres">+20.000L</div><div class="txn-naira">₦19,600</div></div></div>
+          <div class="txn"><div class="txn-icon buy"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 3c3.6 4.2 6 7.6 6 10.5A6 6 0 1 1 6 13.5C6 10.6 8.4 7.2 12 3Z"/></svg></div><div class="txn-body"><div class="txn-title">Ifeoma Okoro</div><div class="txn-sub">Aug 14, 2026 · 12:08 PM</div></div><div class="txn-amt"><div class="txn-litres">+100.000L</div><div class="txn-naira">₦120,000</div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="section-head" style="margin-top:0"><h2>Recent redemptions</h2></div>
+        <div class="card-flush" style="padding:6px 16px">
+          <div class="txn"><div class="txn-icon redeem"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"/><path d="M4 11h10M2 21h14"/><path d="M14 8.5 17 11v6.5a1.5 1.5 0 0 0 3 0V10a2 2 0 0 0-.6-1.4L17.5 7"/></svg></div><div class="txn-body"><div class="txn-title">Total Lekki Phase 1</div><div class="txn-sub">2:08 PM · Tunde A.</div></div><div class="txn-amt"><div class="txn-litres">−10.000L</div></div></div>
+          <div class="txn"><div class="txn-icon redeem"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"/><path d="M4 11h10M2 21h14"/><path d="M14 8.5 17 11v6.5a1.5 1.5 0 0 0 3 0V10a2 2 0 0 0-.6-1.4L17.5 7"/></svg></div><div class="txn-body"><div class="txn-title">NNPC Ajah</div><div class="txn-sub">1:44 PM · Chidi N.</div></div><div class="txn-amt"><div class="txn-litres">−15.000L</div></div></div>
+          <div class="txn"><div class="txn-icon redeem"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"/><path d="M4 11h10M2 21h14"/><path d="M14 8.5 17 11v6.5a1.5 1.5 0 0 0 3 0V10a2 2 0 0 0-.6-1.4L17.5 7"/></svg></div><div class="txn-body"><div class="txn-title">Oando Chevron Drive</div><div class="txn-sub">1:02 PM · Amaka U.</div></div><div class="txn-amt"><div class="txn-litres">−8.000L</div></div></div>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+</div>
+</div>
+</div>
+
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>

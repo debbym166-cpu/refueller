@@ -1,0 +1,15 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}QR Expired{% endblock %}
+
+{% block content %}
+    <div style="padding-top:60px;text-align:center">
+      <div style="width:66px;height:66px;border-radius:50%;background:var(--line-soft);color:var(--ink-faint);display:flex;align-items:center;justify-content:center;margin:0 auto"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="30" height="30"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
+      <h1 style="font-size:20px;margin-top:18px">Redemption expired</h1>
+      <p style="font-size:13px;color:var(--ink-soft);margin-top:6px;max-width:280px;margin-left:auto;margin-right:auto">This QR code is no longer valid. Your {% if redemption %}{{ redemption.litres_redeemed|floatformat:3 }}L are{% else %}litres are{% endif %} safe in your wallet — nothing was deducted.</p>
+      <a class="btn btn-primary" href="{% url 'portfolio:pump-up-redeem-fuel-page' %}" style="margin-top:26px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="13.5" y="3.5" width="7" height="7" rx="1"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><path d="M14 14h2.5v2.5H14zM19 14h1.5M19 19h1.5M14 19h1"/></svg> Generate New QR</a>
+      <a class="btn btn-secondary" href="{% url 'portfolio:home' %}" style="margin-top:10px">Back to Dashboard</a>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,27 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}Redemption Success{% endblock %}
+
+{% block content %}
+    <div style="padding-top:52px;text-align:center">
+      <div style="width:66px;height:66px;border-radius:50%;background:var(--green-100);color:var(--green-700);display:flex;align-items:center;justify-content:center;margin:0 auto"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="34" height="34"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.3 2.3L16 9.7"/></svg></div>
+      <h1 style="font-size:20px;margin-top:18px">Fuel redeemed</h1>
+      <div class="wallet-figure" style="justify-content:center;color:var(--ink);margin-top:18px">{{ redemption.litres_redeemed|floatformat:3 }}<span class="unit" style="color:var(--ink-faint)">L</span></div>
+
+      <div class="card" style="margin-top:22px;text-align:left">
+        <div class="price-row"><span style="font-size:13px;color:var(--ink-soft)">Station</span><span style="font-weight:500;font-size:13px">{{ redemption.station.name }}</span></div>
+        <div class="divider"></div>
+        <div class="price-row"><span style="font-size:13px;color:var(--ink-soft)">Date & time</span><span style="font-weight:500;font-size:13px">{{ redemption.redeemed_at|date:"M j, Y · g:i A" }}</span></div>
+        <div class="divider"></div>
+        <div class="price-row"><span style="font-size:13px;color:var(--ink-soft)">Attendant</span><span style="font-weight:500;font-size:13px">{% if redemption.redeemed_by %}Confirmed by {{ redemption.redeemed_by.get_full_name|default:redemption.redeemed_by.username }}{% else %}Confirmed by attendant{% endif %}</span></div>
+      </div>
+
+      <div class="notice notice-green" style="margin-top:16px;text-align:left"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg>
+        <div><strong>Remaining balance: {{ balance|floatformat:3 }}L</strong> — still protected at your locked prices.</div>
+      </div>
+
+      <a class="btn btn-primary" href="{% url 'portfolio:home' %}" style="margin-top:22px">Back to Dashboard</a>
+    </div>
+{% endblock %}
+

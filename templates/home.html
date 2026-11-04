@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+  {% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }}!</p>
+    <form method="post" action="{% url 'portfolio:logout' %}">
+      {% csrf_token %}
+      <button type="submit">Log out</button>
+    </form>
+  {% else %}
+    <a href="{% url 'portfolio:login' %}">Log in</a> |
+    <a href="{% url 'portfolio:signup' %}">Sign up</a>
+  {% endif %}
+  <p><a href="{% url 'portfolio:about' %}">About</a> | <a href="{% url 'portfolio:contact' %}">Contact</a></p>
+</body>
+</html>

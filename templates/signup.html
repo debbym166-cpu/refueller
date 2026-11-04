@@ -1,0 +1,31 @@
+{% extends "master.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <div class="page-head"><span class="eyebrow">Get started</span><h1>Register</h1></div>
+
+    {% if error %}<div class="notice notice-red" style="margin-top:14px"><div>{{ error|linebreaksbr }}</div></div>{% endif %}
+    {% if success %}<div class="notice notice-green" style="margin-top:14px"><div>{{ success }}</div></div>{% endif %}
+
+    <form method="post" class="card" style="margin-top:14px;max-width:460px">
+      {% csrf_token %}
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input class="input" type="email" id="email" name="email" required>
+      </div>
+      <div class="field">
+        <label for="password1">Password</label>
+        <input class="input" type="password" id="password1" name="password1" minlength="8" required>
+      </div>
+      <div class="field">
+        <label for="password2">Confirm password</label>
+        <input class="input" type="password" id="password2" name="password2" minlength="8" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+
+    <p style="margin-top:14px;font-size:13px;color:var(--ink-soft)">Already have an account? <a class="section-link" href="{% url 'portfolio:login' %}">Log in</a></p>
+{% endblock %}
